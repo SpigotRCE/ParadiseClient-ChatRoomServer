@@ -6,17 +6,28 @@ import java.net.Socket;
 
 import static tk.milkthedev.paradiseclientchatserver.ServerImpl.getServer;
 
+/**
+ * Handles a connection for the server.
+ */
 public class ConnectionHandler implements Runnable
 {
     private final Socket client;
     private BufferedReader in;
     private PrintWriter out;
     private String username;
+
+    /**
+     * Constructs a connection handler.
+     * @param client The client.
+     */
     public ConnectionHandler(Socket client)
     {
         this.client = client;
     }
 
+    /**
+     * Runs the connection handler.
+     */
     @Override
     public void run()
     {
@@ -58,11 +69,18 @@ public class ConnectionHandler implements Runnable
         }
     }
 
+    /**
+     * Sends a message
+     * @param message The message.
+     */
     public void sendMessage(String message)
     {
         out.println(message);
     }
 
+    /**
+     * Closes the connection.
+     */
     public boolean closeConnection(String message)
     {
         try

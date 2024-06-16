@@ -10,6 +10,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Instance of a Server
+ */
 public class ServerImpl implements Runnable
 {
     private final ArrayList<ConnectionHandler> connections = new ArrayList<>();
@@ -17,6 +20,10 @@ public class ServerImpl implements Runnable
     private static ServerImpl serverImpl;
     private ExecutorService pool;
     private boolean done = false;
+
+    /**
+     * Runs the server instance.
+     */
     @Override
     public void run()
     {
@@ -40,12 +47,19 @@ public class ServerImpl implements Runnable
         }
     }
 
+    /**
+     * Broadcasts a message
+     * @param message The message.
+     */
     public void broadcast(String message)
     {
         System.out.println(message);
         for (ConnectionHandler ch : connections) {if (ch != null){ch.sendMessage(message);}}
     }
 
+    /**
+     * Stops the server.
+     */
     public void shutdown()
     {
         System.out.println("Shutting down server...");
@@ -60,5 +74,9 @@ public class ServerImpl implements Runnable
         for (ConnectionHandler ch : connections) {if (ch != null) {if (ch.closeConnection("Server is shutting down...")) {connections.remove(ch);}}}
     }
 
+    /**
+     * Gets the current running server instance.
+     * @return the server instance.
+     */
     public static ServerImpl getServer() {return serverImpl;}
 }
